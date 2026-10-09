@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "hlw8032.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define HLW_RX_SIZE     128u
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,6 +47,26 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+/** Set the coefficient to be matched with hardware configuration
+ *  Schematic default is 1.88 (V_COEF) and 1.0 (I_COEF)
+ */
+static const HLW8032_Config_t hlw_cfg = {
+  .voltage_coef = 1.88f,
+  .current_coef = 1.0f
+};
+static HLW8032_Data_t   hlw_data;
+
+static uint8_t          hlw_rx[HLW_RX_SIZE];
+static uint16_t         hlw_tail;   //  Next pointer to consumed byte
+
+static uint8_t          hlw_slide_win[HLW8032_FRAME_LENGTH];    //  Sliding window
+static uint8_t          hlw_win_cnt;
+
+static volatile bool    hlw_uart_err;   //  Callback error state
+
+/* Debug counters (watch in debugger) */
+static uint32_t hlw_frames_ok, hlw_frames_rejected, hlw_bytes_dropped, hlw_dma_restarts;
+
 
 /* USER CODE END PV */
 
