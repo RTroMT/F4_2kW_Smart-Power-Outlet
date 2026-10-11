@@ -34,7 +34,15 @@ enable_language(C ASM)
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME}
         Core/Inc/hlw8032.h
-        Core/Src/hlw8032.c)
+        Core/Src/hlw8032.c
+        Core/Inc/ili9341.h
+        Core/Src/ili9341.c
+        Core/Inc/xpt2046.h
+        Core/Src/xpt2046.c
+        Core/Inc/flash_store.h
+        Core/Inc/ui.h
+        Core/Src/ui.c
+        Core/Src/flash_store.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
